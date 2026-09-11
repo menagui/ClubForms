@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+<section class="login-shell">
+  <div class="login-copy">
+    <p class="eyebrow">Bem-estar do elenco</p>
+    <h1>Decisões melhores começam com bons dados.</h1>
+    <p>Jogadores registram como estão. A equipe técnica acompanha as respostas em um único painel.</p>
+  </div>
+
+  <div class="card login-card">
+    <h2>Entrar</h2>
+    <p class="muted">Use seu usuário e senha para continuar.</p>
+
+    <% if (error) { %><div class="alert error"><%= error %></div><% } %>
+
+    <form method="post" action="/login" class="stack">
+      <label>
+        Usuário
+        <input name="username" value="<%= username %>" autocomplete="username" required autofocus>
+      </label>
+      <label>
+        Senha
+        <input type="password" name="senha" autocomplete="current-password" required>
+      </label>
+      <button class="button primary" type="submit">Entrar</button>
+    </form>
+
+    <details class="demo-box">
+      <summary>Acessos de demonstração</summary>
+      <p><strong>Jogador:</strong> jogador / jogador123</p>
+      <p><strong>Admin:</strong> admin / admin123</p>
+    </details>
+  </div>
+</section>
+<%- include('partials/footer') %>

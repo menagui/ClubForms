@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">Área do jogador</p>
+    <h1>Como você está hoje?</h1>
+    <p>Responda com sinceridade. Leva menos de dois minutos.</p>
+  </div>
+</section>
+
+<% if (sucesso) { %><div class="alert success">Resposta enviada com sucesso.</div><% } %>
+<% if (error) { %><div class="alert error"><%= error %></div><% } %>
+
+<div class="player-grid">
+  <form method="post" action="/jogador/respostas" class="card questionnaire">
+    <%- include('partials/scale', { name: 'recuperacao', label: 'Como está sua recuperação?', min: 1, max: 10, value: valores.recuperacao }) %>
+    <%- include('partials/scale', { name: 'horas_sono', label: 'Quantas horas você dormiu?', min: 1, max: 10, value: valores.horas_sono }) %>
+    <%- include('partials/scale', { name: 'qualidade_sono', label: 'Qual a qualidade do seu sono?', min: 1, max: 7, value: valores.qualidade_sono }) %>
+    <%- include('partials/scale', { name: 'nivel_estresse', label: 'Qual seu nível de estresse hoje?', min: 1, max: 7, value: valores.nivel_estresse }) %>
+    <%- include('partials/scale', { name: 'nivel_fadiga', label: 'Qual seu nível de fadiga?', min: 1, max: 7, value: valores.nivel_fadiga }) %>
+    <%- include('partials/scale', { name: 'nivel_hidratacao', label: 'Qual seu nível de hidratação?', min: 1, max: 8, value: valores.nivel_hidratacao }) %>
+
+    <div class="question text-question">
+      <label for="dor_localizada">Sente alguma dor localizada?</label>
+      <p class="hint">Deixe vazio caso não sinta dor.</p>
+      <input id="dor_localizada" name="dor_localizada" maxlength="255" placeholder="Ex.: joelho direito" value="<%= valores.dor_localizada || '' %>">
+    </div>
+
+    <div class="question text-question">
+      <label for="grau_dor">Qual o grau da dor?</label>
+      <p class="hint">Escala de 1 a 10. Preencha apenas se informou uma dor.</p>
+      <input id="grau_dor" type="number" name="grau_dor" min="1" max="10" value="<%= valores.grau_dor || '' %>">
+    </div>
+
+    <button class="button primary submit" type="submit">Enviar resposta</button>
+  </form>
+
+  <aside class="card recent">
+    <h2>Últimos envios</h2>
+    <% if (!respostas.length) { %>
+      <p class="empty">Você ainda não enviou nenhuma resposta.</p>
+    <% } else { %>
+      <% respostas.forEach((r) => { %>
+        <article class="recent-item">
+          <time><%= new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(r.data_resposta)) %></time>
+          <div><span>Recuperação</span><strong><%= r.recuperacao %>/10</strong></div>
+          <div><span>Fadiga</span><strong><%= r.nivel_fadiga %>/7</strong></div>
+        </article>
+      <% }) %>
+    <% } %>
+  </aside>
+</div>
+<%- include('partials/footer') %>

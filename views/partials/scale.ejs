@@ -1,0 +1,12 @@
+<fieldset class="question">
+  <legend><%= label %></legend>
+  <div class="scale" role="radiogroup" aria-label="<%= label %>">
+    <% for (let i = min; i <= max; i += 1) { %>
+      <label class="scale-option">
+        <input type="radio" name="<%= name %>" value="<%= i %>" <%= String(value) === String(i) ? 'checked' : '' %> required>
+        <span><%= i %></span>
+      </label>
+    <% } %>
+  </div>
+  <div class="scale-labels"><span>Baixo</span><span>Alto</span></div>
+</fieldset>

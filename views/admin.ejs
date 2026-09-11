@@ -1,0 +1,55 @@
+<%- include('partials/header') %>
+<section class="page-heading admin-heading">
+  <div>
+    <p class="eyebrow">Área da comissão</p>
+    <h1>Painel de respostas</h1>
+    <p>Acompanhe os registros mais recentes do elenco.</p>
+  </div>
+  <form class="search" method="get" action="/admin">
+    <input name="jogador" value="<%= jogador %>" placeholder="Buscar jogador">
+    <button class="button secondary" type="submit">Buscar</button>
+    <% if (jogador) { %><a href="/admin">Limpar</a><% } %>
+  </form>
+</section>
+
+<section class="metrics">
+  <article class="metric"><span>Respostas</span><strong><%= resumo.total_respostas %></strong></article>
+  <article class="metric"><span>Jogadores</span><strong><%= resumo.total_jogadores %></strong></article>
+  <article class="metric"><span>Recuperação média</span><strong><%= resumo.media_recuperacao || '—' %></strong></article>
+  <article class="metric"><span>Fadiga média</span><strong><%= resumo.media_fadiga || '—' %></strong></article>
+</section>
+
+<section class="card table-card">
+  <% if (!respostas.length) { %>
+    <p class="empty">Nenhuma resposta encontrada.</p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Jogador</th><th>Data</th><th>Recup.</th><th>Sono (h)</th>
+            <th>Qual. sono</th><th>Estresse</th><th>Fadiga</th><th>Hidratação</th>
+            <th>Dor</th><th>Grau</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% respostas.forEach((r) => { %>
+            <tr>
+              <td><strong><%= r.nome %></strong><small>@<%= r.username %></small></td>
+              <td><%= new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(r.data_resposta)) %></td>
+              <td><span class="score"><%= r.recuperacao %>/10</span></td>
+              <td><%= r.horas_sono %></td>
+              <td><%= r.qualidade_sono %>/7</td>
+              <td><%= r.nivel_estresse %>/7</td>
+              <td><%= r.nivel_fadiga %>/7</td>
+              <td><%= r.nivel_hidratacao %>/8</td>
+              <td><%= r.dor_localizada || '—' %></td>
+              <td><%= r.grau_dor || '—' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>
+<%- include('partials/footer') %>

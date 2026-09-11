@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> | Formulário Club</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Formulário <span>Club</span></a>
+    <% if (usuario) { %>
+      <div class="user-menu">
+        <span><strong><%= usuario.nome %></strong> · <%= usuario.tipo %></span>
+        <form method="post" action="/logout">
+          <button class="link-button" type="submit">Sair</button>
+        </form>
+      </div>
+    <% } %>
+  </header>
+  <main class="container">
